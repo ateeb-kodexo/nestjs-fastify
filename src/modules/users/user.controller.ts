@@ -1,4 +1,12 @@
-import { BadGatewayException, Body, Controller, Delete, Get, NotFoundException, Put } from '@nestjs/common';
+import {
+	BadGatewayException,
+	Body,
+	Controller,
+	Delete,
+	Get,
+	NotFoundException,
+	Put,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { CurrentUser } from '@/shared/decorators/current-user.decorator';
@@ -12,7 +20,7 @@ export class UserController {
 	constructor(
 		private readonly userService: UserService,
 		private readonly commonService: CommonService,
-	) { }
+	) {}
 
 	@ApiBearerAuth('access-token')
 	@Get('/me')
@@ -20,19 +28,29 @@ export class UserController {
 		const user = await this.userService.findOneBy({ id: userId });
 		if (!user || user.deletedAt) throw new NotFoundException('User not found');
 
-		const userWithoutPassword = this.commonService.omit(user, ['password', 'deletedAt']);
-		return ResponseMapper.map({ message: 'Profile fetched', data: userWithoutPassword });
+		const userWithoutPassword = this.commonService.omit(user, [
+			'password',
+			'deletedAt',
+		]);
+		return ResponseMapper.map({
+			message: 'Profile fetched',
+			data: userWithoutPassword,
+		});
 	}
 
 	@ApiBearerAuth('access-token')
 	@Put('/me')
-	public async profileUpdateHandler(@CurrentUser() userId: number, @Body() body: UserUpdateDto) {
+	public async profileUpdateHandler(
+		@CurrentUser() userId: number,
+		@Body() body: UserUpdateDto,
+	) {
 		const user = await this.userService.findOneBy({ id: userId });
 		if (!user || user.deletedAt) throw new NotFoundException('User not found');
 
 		const updateData = Object.assign(user, body);
 		const [error] = await this.userService.save(updateData);
-		if (error) throw new BadGatewayException('Failed to update user, Please try later');
+		if (error)
+			throw new BadGatewayException('Failed to update user, Please try later');
 
 		return ResponseMapper.map({ message: 'User updated' });
 	}
@@ -44,7 +62,8 @@ export class UserController {
 		if (!user || user.deletedAt) throw new NotFoundException('User not found');
 
 		const [error] = await this.userService.softDelete(user);
-		if (error) throw new BadGatewayException('Failed to delete user, Please try later');
+		if (error)
+			throw new BadGatewayException('Failed to delete user, Please try later');
 
 		return ResponseMapper.map({ message: 'User deleted' });
 	}

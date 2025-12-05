@@ -1,5 +1,9 @@
 import { Injectable, type ExecutionContext } from '@nestjs/common';
-import { ThrottlerGuard, ThrottlerStorage, type ThrottlerModuleOptions } from '@nestjs/throttler';
+import {
+	ThrottlerGuard,
+	ThrottlerStorage,
+	type ThrottlerModuleOptions,
+} from '@nestjs/throttler';
 import { Reflector } from '@nestjs/core';
 import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
 
@@ -15,10 +19,10 @@ export class PublicRateLimitGuard extends ThrottlerGuard {
 	}
 
 	override async canActivate(context: ExecutionContext): Promise<boolean> {
-		const isPublic = this.reflectorService.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
-			context.getHandler(),
-			context.getClass(),
-		]);
+		const isPublic = this.reflectorService.getAllAndOverride<boolean>(
+			IS_PUBLIC_KEY,
+			[context.getHandler(), context.getClass()],
+		);
 
 		if (!isPublic) return true;
 		return super.canActivate(context);

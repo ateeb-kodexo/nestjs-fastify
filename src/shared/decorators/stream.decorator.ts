@@ -2,7 +2,11 @@ import { Sse, type MessageEvent } from '@nestjs/common';
 import { Observable } from 'rxjs';
 
 export function SseStream(route?: string) {
-	return (target: Object, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
+	return (
+		target: Object,
+		propertyKey: string | symbol,
+		descriptor: PropertyDescriptor,
+	) => {
 		const originalMethod = descriptor.value;
 		descriptor.value = function (...args: unknown[]) {
 			const generator = originalMethod.apply(this, args);

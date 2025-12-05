@@ -12,7 +12,10 @@ import { FastifyAdapter } from '@nestjs/platform-fastify';
 
 async function bootstrap() {
 	const logger = new Logger('NestFactory');
-	const app = await NestFactory.create<INestApplication<FastifyAdapter>>(AppModule, new FastifyAdapter());
+	const app = await NestFactory.create<INestApplication<FastifyAdapter>>(
+		AppModule,
+		new FastifyAdapter(),
+	);
 
 	app.enableCors();
 	app.useGlobalPipes(new ValidationPipe());
@@ -26,7 +29,10 @@ async function bootstrap() {
 
 	await app.listen(env.PORT, '0.0.0.0');
 	logger.log(`Application is running on: http://localhost:${env.PORT}`);
-	if (!isProduction) logger.log(`Scalar docs available at http://localhost:${env.PORT}/api/docs`);
+	if (!isProduction)
+		logger.log(
+			`Scalar docs available at http://localhost:${env.PORT}/api/docs`,
+		);
 
 	return app;
 }

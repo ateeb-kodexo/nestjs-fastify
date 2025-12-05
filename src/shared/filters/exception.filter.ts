@@ -16,21 +16,41 @@ export class GlobalExceptionFilter implements ExceptionFilter {
 		const ctx = host.switchToHttp();
 		const res = ctx.getResponse() as FastifyReply;
 
-		let response = ResponseMapper.map({ message: 'INTERNAL_SERVER_ERROR', status: 500 });
+		let response = ResponseMapper.map({
+			message: 'INTERNAL_SERVER_ERROR',
+			status: 500,
+		});
 		if (exception instanceof HttpException)
-			response = ResponseMapper.map({ message: exception.message, status: exception.getStatus() });
+			response = ResponseMapper.map({
+				message: exception.message,
+				status: exception.getStatus(),
+			});
 		if (exception instanceof ThrottlerException)
-			response = ResponseMapper.map({ message: 'Too Many Request', status: 429 });
+			response = ResponseMapper.map({
+				message: 'Too Many Request',
+				status: 429,
+			});
 
 		if (exception instanceof BadRequestException) {
-			const res = exception.getResponse() as string | { message: string | string[] };
+			const res = exception.getResponse() as
+				| string
+				| { message: string | string[] };
 			if (typeof res === 'string') {
-				response = ResponseMapper.map({ message: res, status: HttpStatus.BAD_REQUEST });
+				response = ResponseMapper.map({
+					message: res,
+					status: HttpStatus.BAD_REQUEST,
+				});
 			} else {
 				if (Array.isArray(res.message)) {
-					response = ResponseMapper.map({ message: res.message[0], status: HttpStatus.BAD_REQUEST });
+					response = ResponseMapper.map({
+						message: res.message[0],
+						status: HttpStatus.BAD_REQUEST,
+					});
 				} else {
-					response = ResponseMapper.map({ message: res.message, status: HttpStatus.BAD_REQUEST });
+					response = ResponseMapper.map({
+						message: res.message,
+						status: HttpStatus.BAD_REQUEST,
+					});
 				}
 			}
 		}

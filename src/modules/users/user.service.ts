@@ -8,7 +8,7 @@ export class UserService {
 	constructor(
 		@InjectRepository(UserEntity)
 		private readonly userRepo: Repository<UserEntity>,
-	) { }
+	) {}
 
 	async findOneBy(where: FindOptionsWhere<UserEntity>) {
 		return this.userRepo.findOne({ where });

@@ -1,4 +1,9 @@
-import { Injectable, UnauthorizedException, type CanActivate, type ExecutionContext } from '@nestjs/common';
+import {
+	Injectable,
+	UnauthorizedException,
+	type CanActivate,
+	type ExecutionContext,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
 import { AuthService } from '@/modules/auth/auth.service';
@@ -28,7 +33,8 @@ export class AuthGuard implements CanActivate {
 
 		const payload = await this.authService.verifyToken(token, TokenType.ACCESS);
 		if (!payload) throw new UnauthorizedException();
-		if (this.authService.isBlockedToken(payload.tokenId)) throw new UnauthorizedException();
+		if (this.authService.isBlockedToken(payload.tokenId))
+			throw new UnauthorizedException();
 
 		request.user = { id: payload.userId };
 		return true;
