@@ -9,6 +9,7 @@ import { SwaggerModule } from '@nestjs/swagger';
 import { ScalarConfig, SwaggerConfig } from './config/swagger.config';
 import { apiReference } from '@scalar/nestjs-api-reference';
 import { FastifyAdapter } from '@nestjs/platform-fastify';
+import helmet from '@fastify/helmet';
 
 async function bootstrap() {
 	const logger = new Logger('NestFactory');
@@ -16,6 +17,8 @@ async function bootstrap() {
 		AppModule,
 		new FastifyAdapter(),
 	);
+
+	await app.getHttpAdapter().getInstance().register(helmet);
 
 	app.enableCors();
 	app.useGlobalPipes(new ValidationPipe());
