@@ -1,9 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {
-	JwtService,
-	type JwtSignOptions,
-	type JwtVerifyOptions,
-} from '@nestjs/jwt';
+import { JwtService, type JwtSignOptions, type JwtVerifyOptions } from '@nestjs/jwt';
 import { TokenType } from '@/shared/enums/auth.enum';
 import { env } from '@/config/env.config';
 import type { FastifyRequest } from 'fastify';

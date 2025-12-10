@@ -5,9 +5,7 @@ dotenv.config();
 
 const envSchema = z.object({
 	PORT: z.coerce.number().default(5000),
-	NODE_ENV: z
-		.enum(['development', 'production', 'staging'])
-		.default('development'),
+	NODE_ENV: z.enum(['development', 'production', 'staging']).default('development'),
 	PG_URL: z.url(),
 	JWT_ACCESS_SECRET: z.string(),
 	JWT_REFRESH_SECRET: z.string(),

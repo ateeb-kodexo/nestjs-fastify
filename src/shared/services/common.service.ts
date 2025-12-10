@@ -8,9 +8,7 @@ export class CommonService {
 	 * @param pms Promise you want to resolve safely
 	 * @returns a tuple with first value to be error if promise fails else null, second value to be resolved promise or null
 	 */
-	public async promise<T>(
-		pms: Promise<T>,
-	): Promise<readonly [Error | null, T | null]> {
+	public async promise<T>(pms: Promise<T>): Promise<readonly [Error | null, T | null]> {
 		try {
 			return [null, await pms] as const;
 		} catch (error) {
@@ -23,9 +21,7 @@ export class CommonService {
 	 * @param obj The object to check
 	 * @returns true if the object is empty, false otherwise
 	 */
-	public isEmptyObject(
-		obj: Record<string | number | symbol, unknown>,
-	): boolean {
+	public isEmptyObject(obj: Record<string | number | symbol, unknown>): boolean {
 		return Object.keys(obj).length === 0;
 	}
 

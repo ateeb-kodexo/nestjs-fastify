@@ -33,11 +33,7 @@ async function bootstrap() {
 	await app.listen(env.PORT, '0.0.0.0');
 	logger.log(`Application is running on: http://localhost:${env.PORT}`);
 	if (!isProduction)
-		logger.log(
-			`Scalar docs available at http://localhost:${env.PORT}/api/docs`,
-		);
-
-	return app;
+		logger.log(`Scalar docs available at http://localhost:${env.PORT}/api/docs`);
 }
 
 bootstrap();

@@ -23,11 +23,7 @@ export class HttpService {
 		).then((response) => response.data);
 	}
 
-	async post<T>(
-		url: string,
-		data?: unknown,
-		config?: AxiosRequestConfig,
-	): Promise<T> {
+	async post<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T> {
 		this.logger.log(`Making POST request to: ${url}`);
 
 		return lastValueFrom(
@@ -40,11 +36,7 @@ export class HttpService {
 		).then((response) => response.data);
 	}
 
-	async put<T>(
-		url: string,
-		data?: unknown,
-		config?: AxiosRequestConfig,
-	): Promise<T> {
+	async put<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T> {
 		this.logger.log(`Making PUT request to: ${url}`);
 
 		return lastValueFrom(
@@ -57,11 +49,7 @@ export class HttpService {
 		).then((response) => response.data);
 	}
 
-	async patch<T>(
-		url: string,
-		data?: unknown,
-		config?: AxiosRequestConfig,
-	): Promise<T> {
+	async patch<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T> {
 		this.logger.log(`Making PATCH request to: ${url}`);
 
 		return lastValueFrom(

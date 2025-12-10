@@ -28,10 +28,7 @@ export class UserController {
 		const user = await this.userService.findOneBy({ id: userId });
 		if (!user || user.deletedAt) throw new NotFoundException('User not found');
 
-		const userWithoutPassword = this.commonService.omit(user, [
-			'password',
-			'deletedAt',
-		]);
+		const userWithoutPassword = this.commonService.omit(user, ['password', 'deletedAt']);
 		return ResponseMapper.map({
 			message: 'Profile fetched',
 			data: userWithoutPassword,
@@ -49,8 +46,7 @@ export class UserController {
 
 		const updateData = Object.assign(user, body);
 		const [error] = await this.userService.save(updateData);
-		if (error)
-			throw new BadGatewayException('Failed to update user, Please try later');
+		if (error) throw new BadGatewayException('Failed to update user, Please try later');
 
 		return ResponseMapper.map({ message: 'User updated' });
 	}
@@ -62,8 +58,7 @@ export class UserController {
 		if (!user || user.deletedAt) throw new NotFoundException('User not found');
 
 		const [error] = await this.userService.softDelete(user);
-		if (error)
-			throw new BadGatewayException('Failed to delete user, Please try later');
+		if (error) throw new BadGatewayException('Failed to delete user, Please try later');
 
 		return ResponseMapper.map({ message: 'User deleted' });
 	}

@@ -19,10 +19,10 @@ export class PublicRateLimitGuard extends ThrottlerGuard {
 	}
 
 	override async canActivate(context: ExecutionContext): Promise<boolean> {
-		const isPublic = this.reflectorService.getAllAndOverride<boolean>(
-			IS_PUBLIC_KEY,
-			[context.getHandler(), context.getClass()],
-		);
+		const isPublic = this.reflectorService.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+			context.getHandler(),
+			context.getClass(),
+		]);
 
 		if (!isPublic) return true;
 		return super.canActivate(context);

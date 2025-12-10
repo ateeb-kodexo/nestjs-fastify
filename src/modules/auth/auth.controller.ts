@@ -39,12 +39,10 @@ export class AuthController {
 		if (!(await bcrypt.compare(body.password, user.password)))
 			throw new BadRequestException('Invalid credentials');
 
-		const [accessToken, refreshToken] =
-			await this.authService.generateAuthTokens(user.id);
-		const userWithoutPass = this.commonService.omit(user, [
-			'password',
-			'deletedAt',
-		]);
+		const [accessToken, refreshToken] = await this.authService.generateAuthTokens(
+			user.id,
+		);
+		const userWithoutPass = this.commonService.omit(user, ['password', 'deletedAt']);
 
 		return ResponseMapper.map({
 			message: 'Signed in successfully',
@@ -87,12 +85,10 @@ export class AuthController {
 		const user = await this.userService.findOneBy({ id: payload.userId });
 		if (!user) throw new UnauthorizedException('Invalid refresh token');
 
-		const [accessToken, refreshToken] =
-			await this.authService.generateAuthTokens(user.id);
-		const userWithoutPass = this.commonService.omit(user, [
-			'password',
-			'deletedAt',
-		]);
+		const [accessToken, refreshToken] = await this.authService.generateAuthTokens(
+			user.id,
+		);
+		const userWithoutPass = this.commonService.omit(user, ['password', 'deletedAt']);
 
 		return ResponseMapper.map({
 			message: 'Session refreshed',

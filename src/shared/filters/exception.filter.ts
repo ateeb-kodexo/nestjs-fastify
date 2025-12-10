@@ -32,9 +32,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
 			});
 
 		if (exception instanceof BadRequestException) {
-			const res = exception.getResponse() as
-				| string
-				| { message: string | string[] };
+			const res = exception.getResponse() as string | { message: string | string[] };
 			if (typeof res === 'string') {
 				response = ResponseMapper.map({
 					message: res,

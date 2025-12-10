@@ -18,9 +18,7 @@ export const SwaggerConfig = new DocumentBuilder()
 	)
 	.build();
 
-export const ScalarConfig = (
-	document: OpenAPIObject,
-): NestJSReferenceConfiguration => ({
+export const ScalarConfig = (document: OpenAPIObject): NestJSReferenceConfiguration => ({
 	theme: 'fastify',
 	layout: 'modern',
 	content: document,
