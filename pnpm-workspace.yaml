@@ -1,2 +1,6 @@
 ignoredBuiltDependencies:
   - '@nestjs/core'
+
+onlyBuiltDependencies:
+  - '@scarf/scarf'
+  - unrs-resolver
